@@ -1,29 +1,19 @@
 package com.greed.scorer;
 
+import com.greed.result.Result;
+
 import java.util.Map;
 
 public class StraightScorer implements Scorer {
 
-    private int scoreForStraight;
+    private static final int SCORE_FOR_STRAIGHT= 1200;
+    private static final int NO_SCORE = 0;
+    private static final int STRAIGHT = 6;
 
     @Override
     public int score(Map<Integer, Integer> diceCounts) {
-
-        if (isStraight(diceCounts)) {
-            scoreForStraight = 1200;
-        }
-        return scoreForStraight;
+        return Result.STRAIGHT.isResult(diceCounts)
+                ? SCORE_FOR_STRAIGHT
+                : NO_SCORE;
     }
-
-    private boolean isStraight(Map<Integer, Integer> diceCounts) {
-        int valuesEqual = 0;
-        for (Integer die : diceCounts.keySet()) {
-            int numberOfEachDie = diceCounts.get(die);
-            if (numberOfEachDie == 1) {
-                valuesEqual++;
-            }
-        }
-        return valuesEqual == diceCounts.size();
-    }
-
 }

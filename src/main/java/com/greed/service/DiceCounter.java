@@ -13,9 +13,7 @@ public class DiceCounter {
             diceCounts.put(possibleDie, 0);
         }
         for (String die : dice) {
-            if (diceCounts.containsKey(Integer.valueOf(die))) {
-                diceCounts.computeIfPresent(Integer.valueOf(die), (key, value) -> ++value);
-            }
+            diceCounts.computeIfPresent(Integer.valueOf(die), (key, value) -> ++value);
         }
         return diceCounts;
     }

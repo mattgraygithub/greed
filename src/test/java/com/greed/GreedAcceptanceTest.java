@@ -2,8 +2,10 @@ package com.greed;
 
 import com.greed.scorer.*;
 import com.greed.service.DiceCounter;
-import com.greed.service.ScorersListCreator;
 import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -11,8 +13,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class GreedAcceptanceTest {
 
     private DiceCounter diceCounter = new DiceCounter();
-    private ScorersListCreator scorersListCreator = new ScorersListCreator();
-    private Greed greed = new Greed(scorersListCreator,diceCounter);
+
+    private final List<Scorer> scorers = Arrays.asList(
+            new OnesScorer(),
+            new FivesScorer(),
+            new TriplesAndUpwardsScorer(),
+            new ThreePairsScorer(),
+            new StraightScorer()
+    );
+
+    private Greed greed = new Greed(scorers, diceCounter);
 
     @Test
     public void shouldScoreFourHundredAndFiftyForTwoOnesOneFiveAndThreeTwos(){

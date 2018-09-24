@@ -1,29 +1,18 @@
 package com.greed.scorer;
 
+import com.greed.result.Result;
+
 import java.util.Map;
 
 public class ThreePairsScorer implements Scorer {
 
-    private int scoreForThreePairs;
+    private static final int SCORE_FOR_THREE_PAIRS= 800;
+    private static final int NO_SCORE = 0;
 
     @Override
     public int score(Map<Integer, Integer> diceCounts) {
-
-        if (isThreePairs(diceCounts)) {
-            scoreForThreePairs = 800;
-        }
-
-        return scoreForThreePairs;
-    }
-
-    private boolean isThreePairs(Map<Integer, Integer> diceCounts) {
-        int numberOfPairs = 0;
-        for (Integer die : diceCounts.keySet()) {
-            int numberOfEachDie = diceCounts.get(die);
-            if (numberOfEachDie == 2) {
-                numberOfPairs++;
-            }
-        }
-        return numberOfPairs == 3;
+        return Result.THREE_PAIRS.isResult(diceCounts)
+                ? SCORE_FOR_THREE_PAIRS
+                : NO_SCORE;
     }
 }

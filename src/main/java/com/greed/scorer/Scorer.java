@@ -6,4 +6,3 @@ public interface Scorer {
 
     int score(Map<Integer, Integer> diceCounts);
 }
-

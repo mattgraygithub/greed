@@ -2,15 +2,15 @@ package com.greed;
 
 import com.greed.scorer.*;
 import com.greed.service.DiceCounter;
-import com.greed.service.ScorersListCreator;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class GreedTest {
 
-    private static final Map<Integer, Integer> DICE_COUNTS = new HashMap<Integer, Integer>(){{
+    private static final Map<Integer, Integer> DICE_COUNTS = new HashMap<Integer, Integer>() {{
         put(1, 1);
         put(2, 5);
         put(3, 6);
@@ -29,31 +29,30 @@ public class GreedTest {
         put(6, 0);
     }};
 
-    private static final ArrayList<Scorer> scorersList = new ArrayList<>();
-
     @Mock
     private DiceCounter diceCounter;
 
     @Mock
-    private OnesScorer onesScorer;
+    private Scorer scorer1;
 
     @Mock
-    private FivesScorer fivesScorer;
+    private Scorer scorer2;
 
     @Mock
-    private TriplesAndUpwardsScorer triplesAndUpwardsScorer;
+    private Scorer scorer3;
 
-    @Mock
-    private ThreePairsScorer threePairsScorer;
+    private final List<Scorer> scorers = new ArrayList<>();
 
-    @Mock
-    private StraightScorer straightScorer;
-
-    @Mock
-    private ScorersListCreator scorersListCreator;
-
-    @InjectMocks
     private Greed greed;
+
+    @Before
+    public void before() {
+        scorers.add(scorer1);
+        scorers.add(scorer2);
+        scorers.add(scorer3);
+
+        greed = new Greed(scorers, diceCounter);
+    }
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldOnlyAcceptUpToSixDiceThrown() {
@@ -63,25 +62,11 @@ public class GreedTest {
     @Test
     public void shouldAddScorersTogetherToGiveFinalScore() {
 
+        when(scorer1.score(DICE_COUNTS)).thenReturn(100);
+        when(scorer2.score(DICE_COUNTS)).thenReturn(200);
+        when(scorer3.score(DICE_COUNTS)).thenReturn(450);
         when(diceCounter.count(new String[]{"1", "5", "6", "6", "6", "0"})).thenReturn(DICE_COUNTS);
-        when(onesScorer.score(DICE_COUNTS)).thenReturn(100);
-        when(fivesScorer.score(DICE_COUNTS)).thenReturn(50);
-        when(triplesAndUpwardsScorer.score(DICE_COUNTS)).thenReturn(600);
-        when(threePairsScorer.score(DICE_COUNTS)).thenReturn(0);
-        when(straightScorer.score(DICE_COUNTS)).thenReturn(0);
-        when(scorersListCreator.createList()).thenReturn(createList());
 
         assertThat(greed.score(new String[]{"1", "5", "6", "6", "6", "0"}), is(750));
-    }
-
-    private ArrayList<Scorer> createList() {
-
-        scorersList.add(onesScorer);
-        scorersList.add(fivesScorer);
-        scorersList.add(triplesAndUpwardsScorer);
-        scorersList.add(threePairsScorer);
-        scorersList.add(straightScorer);
-
-        return scorersList;
     }
 }

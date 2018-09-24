@@ -9,5 +9,8 @@
         <module name="greed" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="greed" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

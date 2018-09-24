@@ -1,10 +1,10 @@
 package com.greed;
 
-import com.greed.scorer.*;
+import com.greed.result.Result;
+import com.greed.scorer.Scorer;
 import com.greed.service.DiceCounter;
-import com.greed.service.ScorersListCreator;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Greed {
@@ -13,17 +13,17 @@ public class Greed {
 
     private final DiceCounter diceCounter;
 
-    private final ScorersListCreator scorersListCreator;
+    private final List<Scorer> scorers;
 
-    private int score = 0;
+    public Greed(List<Scorer> scorers, DiceCounter diceCounter) {
 
-    public Greed(ScorersListCreator scorersListCreator, DiceCounter diceCounter) {
-
-        this.scorersListCreator = scorersListCreator;
         this.diceCounter = diceCounter;
+        this.scorers = scorers;
     }
 
     public int score(String[] dice) {
+
+        int score = 0;
 
         if (dice.length > MAXIMUM_DICE) {
             throw new IllegalArgumentException("Only 6 dice allowed!");
@@ -31,53 +31,28 @@ public class Greed {
 
         Map<Integer, Integer> diceCounts = diceCounter.count(dice);
 
-        ArrayList<Scorer> scorerArrayList = scorersListCreator.createList();
-
-        for (Scorer scorer : scorerArrayList) {
+        for (Scorer scorer : scorers) {
             score += scorer.score(diceCounts);
         }
 
-        subtractDuplicateScores(diceCounts);
-
-        return score;
+        return (Result.THREE_PAIRS.isResult(diceCounts) || Result.STRAIGHT.isResult(diceCounts))
+                ? score - scoreForSingleOnes(diceCounts) - scoreForSingleFives(diceCounts)
+                : score;
     }
 
-    private void subtractDuplicateScores(Map<Integer,Integer>diceCounts){
-        if (isThreePairs(diceCounts)||isStraight(diceCounts)){
-            subtractScoreForSingleOnesAndFives(diceCounts);
-        }
-    }
-
-    private void subtractScoreForSingleOnesAndFives(Map<Integer, Integer> diceCounts) {
-        if (diceCounts.get(1) > 0){
-            int scoreForSingleOne = 100;
-            score -= diceCounts.get(1) * scoreForSingleOne;
-        }
-        if (diceCounts.get(5) > 0){
-            int scoreForSingleFive = 50;
-            score -= diceCounts.get(1) * scoreForSingleFive;
+    private int scoreForSingleOnes(Map<Integer, Integer> diceCounts) {
+        if (diceCounts.get(1) > 0) {
+            return diceCounts.get(1) * 100;
+        } else {
+            return 0;
         }
     }
 
-    private boolean isThreePairs(Map<Integer, Integer> diceCounts) {
-        int numberOfPairs = 0;
-        for (Integer die : diceCounts.keySet()) {
-            int numberOfEachDie = diceCounts.get(die);
-            if (numberOfEachDie == 2) {
-                numberOfPairs++;
-            }
+    private int scoreForSingleFives(Map<Integer, Integer> diceCounts) {
+        if (diceCounts.get(5) > 0) {
+            return diceCounts.get(5) * 50;
+        } else {
+            return 0;
         }
-        return numberOfPairs == 3;
-    }
-
-    private boolean isStraight(Map<Integer, Integer> diceCounts) {
-        int valuesEqual = 0;
-        for (Integer die : diceCounts.keySet()) {
-            int numberOfEachDie = diceCounts.get(die);
-            if (numberOfEachDie == 1) {
-                valuesEqual++;
-            }
-        }
-        return valuesEqual == diceCounts.size();
     }
 }
