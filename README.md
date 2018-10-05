@@ -4,7 +4,7 @@ This is my solution to the KataGreed Kata from codingdojo.org.
 
 * TDD approach using JUnit with Mockito
 * Uses Java 8 lambdas and streams to iterate over each scorer type to calculate overall score
-* Uses enum with Java 8 lambdas and streams to conclude whether a 'Straight' or 'Three Pairs' has been passed
+* Uses enum with Java 8 lambdas and streams to determine whether a 'Straight' or 'Three Pairs' has been passed
 
 ## Requirements
 
