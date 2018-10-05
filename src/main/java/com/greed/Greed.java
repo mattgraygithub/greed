@@ -23,36 +23,12 @@ public class Greed {
 
     public int score(String[] dice) {
 
-        int score = 0;
-
         if (dice.length > MAXIMUM_DICE) {
             throw new IllegalArgumentException("Only 6 dice allowed!");
         }
 
         Map<Integer, Integer> diceCounts = diceCounter.count(dice);
 
-        for (Scorer scorer : scorers) {
-            score += scorer.score(diceCounts);
-        }
-
-        return (Result.THREE_PAIRS.isResult(diceCounts) || Result.STRAIGHT.isResult(diceCounts))
-                ? score - scoreForSingleOnes(diceCounts) - scoreForSingleFives(diceCounts)
-                : score;
-    }
-
-    private int scoreForSingleOnes(Map<Integer, Integer> diceCounts) {
-        if (diceCounts.get(1) > 0) {
-            return diceCounts.get(1) * 100;
-        } else {
-            return 0;
-        }
-    }
-
-    private int scoreForSingleFives(Map<Integer, Integer> diceCounts) {
-        if (diceCounts.get(5) > 0) {
-            return diceCounts.get(5) * 50;
-        } else {
-            return 0;
-        }
+        return scorers.stream().mapToInt(scorer -> scorer.score(diceCounts)).sum();
     }
 }

@@ -19,7 +19,9 @@ public class GreedAcceptanceTest {
             new FivesScorer(),
             new TriplesAndUpwardsScorer(),
             new ThreePairsScorer(),
-            new StraightScorer()
+            new StraightScorer(),
+            new SingleOnesScorer(),
+            new SingleFivesScorer()
     );
 
     private Greed greed = new Greed(scorers, diceCounter);

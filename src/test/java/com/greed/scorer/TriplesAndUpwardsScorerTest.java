@@ -1,6 +1,5 @@
 package com.greed.scorer;
 
-import com.greed.service.DiceCounter;
 import org.junit.Test;
 
 import java.util.HashMap;

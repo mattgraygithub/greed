@@ -8,7 +8,6 @@ public class StraightScorer implements Scorer {
 
     private static final int SCORE_FOR_STRAIGHT= 1200;
     private static final int NO_SCORE = 0;
-    private static final int STRAIGHT = 6;
 
     @Override
     public int score(Map<Integer, Integer> diceCounts) {

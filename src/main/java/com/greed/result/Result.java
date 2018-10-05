@@ -18,5 +18,3 @@ public enum Result {
         return function.apply(diceCounts);
     }
 }
-
-
