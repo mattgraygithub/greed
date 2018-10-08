@@ -1,6 +1,5 @@
 package com.greed;
 
-import com.greed.result.Result;
 import com.greed.scorer.Scorer;
 import com.greed.service.DiceCounter;
 

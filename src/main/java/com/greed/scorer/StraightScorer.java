@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class StraightScorer implements Scorer {
 
-    private static final int SCORE_FOR_STRAIGHT= 1200;
+    private static final int SCORE_FOR_STRAIGHT = 1200;
     private static final int NO_SCORE = 0;
 
     @Override

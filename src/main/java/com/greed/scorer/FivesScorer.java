@@ -13,7 +13,7 @@ public class FivesScorer implements Scorer {
 
         int numberOfFives = diceCounts.get(NUMBER_OF_FIVES);
 
-        return numberOfFives <=2
+        return numberOfFives <= 2
                 ? numberOfFives * SCORE_FOR_SINGLE_FIVE
                 : NO_SCORE;
     }

@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 
 public class SingleFivesScorerTest {
 
@@ -15,22 +16,22 @@ public class SingleFivesScorerTest {
     private Map<Integer, Integer> diceCounts = new HashMap<>();
 
     @Test
-    public void shouldSubtractScoreForEachSingleOneIfThreePairsThrown(){
+    public void shouldSubtractScoreForEachSingleOneIfThreePairsThrown() {
 
         for (int die = 1; die <= 6; die += 2) {
             diceCounts.put(die, 2);
         }
 
-        assertThat(singleFivesScorer.score(diceCounts),is(-100));
+        assertThat(singleFivesScorer.score(diceCounts), is(-100));
     }
 
     @Test
-    public void shouldSubtractScoreForEachSingleOneIfStraightThrown(){
+    public void shouldSubtractScoreForEachSingleOneIfStraightThrown() {
 
         for (int die = 1; die <= 6; die++) {
             diceCounts.put(die, 1);
         }
 
-        assertThat(singleFivesScorer.score(diceCounts),is(-50));
+        assertThat(singleFivesScorer.score(diceCounts), is(-50));
     }
 }

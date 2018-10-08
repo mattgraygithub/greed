@@ -10,8 +10,6 @@ This is my solution to the KataGreed Kata from codingdojo.org.
 
 * Java 8
 * Maven
-* JUnit 4.0
-* Mockito 2.0
 
 ## KataGreed Kata
 
@@ -40,5 +38,3 @@ Six-of-a-kind (Multiply Triple Score by 8)
 Three Pairs [2,2,3,3,4,4] (800)
 
 Straight [1,2,3,4,5,6] (1200)
-
-

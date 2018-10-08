@@ -5,46 +5,47 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 
 public class ResultTest {
 
     private Map<Integer, Integer> diceCounts = new HashMap<>();
 
     @Test
-    public void shouldReturnTrueForThreePairsIfThreePairsThrown(){
+    public void shouldReturnTrueForThreePairsIfThreePairsThrown() {
 
-        for (int die = 1; die <= 6; die += 2) {
-            diceCounts.put(die, 2);
-        }
+        diceCounts.put(1,2);
+        diceCounts.put(2,2);
+        diceCounts.put(3,2);
 
-        assertTrue(Result.THREE_PAIRS.isResult(diceCounts));
+        assertThat(Result.THREE_PAIRS.isResult(diceCounts), is(true));
     }
 
     @Test
-    public void shouldReturnFalseForThreePairsIfThreePairsNotThrown(){
-        diceCounts.put(1,3);
-        diceCounts.put(2,3);
+    public void shouldReturnFalseForThreePairsIfThreePairsNotThrown() {
+        diceCounts.put(1, 3);
+        diceCounts.put(2, 3);
 
-        assertFalse(Result.THREE_PAIRS.isResult(diceCounts));
+        assertThat(Result.THREE_PAIRS.isResult(diceCounts), is(false));
     }
 
     @Test
-    public void shouldReturnTrueStraightIfStraightThrown(){
+    public void shouldReturnTrueStraightIfStraightThrown() {
 
-        for (int die = 1; die <= 6; die ++) {
+        for (int die = 1; die <= 6; die++) {
             diceCounts.put(die, 1);
         }
 
-        assertTrue(Result.STRAIGHT.isResult(diceCounts));
+        assertThat(Result.STRAIGHT.isResult(diceCounts), is(true));
     }
 
     @Test
-    public void shouldReturnFalseForStraightIfStraightNotThrown(){
-        diceCounts.put(1,3);
-        diceCounts.put(2,3);
+    public void shouldReturnFalseForStraightIfStraightNotThrown() {
+        diceCounts.put(1, 3);
+        diceCounts.put(2, 3);
 
-        assertFalse(Result.STRAIGHT.isResult(diceCounts));
+        assertThat(Result.STRAIGHT.isResult(diceCounts), is(false));
     }
 }

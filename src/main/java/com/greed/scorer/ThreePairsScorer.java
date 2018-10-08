@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class ThreePairsScorer implements Scorer {
 
-    private static final int SCORE_FOR_THREE_PAIRS= 800;
+    private static final int SCORE_FOR_THREE_PAIRS = 800;
     private static final int NO_SCORE = 0;
 
     @Override

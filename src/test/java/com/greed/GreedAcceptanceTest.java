@@ -27,17 +27,17 @@ public class GreedAcceptanceTest {
     private Greed greed = new Greed(scorers, diceCounter);
 
     @Test
-    public void shouldScoreFourHundredAndFiftyForTwoOnesOneFiveAndThreeTwos(){
+    public void shouldScoreFourHundredAndFiftyForTwoOnesOneFiveAndThreeTwos() {
         assertThat(score("1", "5", "1", "2", "2", "2"), is(450));
     }
 
     @Test
-    public void shouldScoreEightHundredForThreePairs(){
+    public void shouldScoreEightHundredForThreePairs() {
         assertThat(score("1", "1", "2", "2", "5", "5"), is(800));
     }
 
     @Test
-    public void shouldScoreOneThousandTwoHundredForStraight(){
+    public void shouldScoreOneThousandTwoHundredForStraight() {
         assertThat(score("6", "5", "4", "3", "2", "1"), is(1200));
     }
 
